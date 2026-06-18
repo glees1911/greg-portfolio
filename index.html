@@ -930,9 +930,19 @@
 
       .hero__stat-label { flex: 1; }
 
-      .testimonial { flex: 0 0 85%; }
+      .testimonials__carousel { flex-wrap: wrap; gap: 0.75rem; }
 
-      .testimonials__carousel { gap: 0.75rem; }
+      .testimonials__track {
+        order: 1;
+        flex: 1 1 100%;
+        -webkit-mask-image: none;
+        mask-image: none;
+      }
+
+      .testimonial { flex: 0 0 100%; padding: 1.5rem; }
+
+      .testimonial__arrow--prev { order: 2; }
+      .testimonial__arrow--next { order: 3; margin-left: auto; }
 
       .section-heading { font-size: 1.625rem; }
 
