@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Greg Lees builds operating infrastructure from scratch for growing teams. BizOps and RevOps for Series A–B startups.">
+  <title>Greg Lees: Operations for Growing Teams</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://greglees.me/">
+  <meta property="og:title" content="Greg Lees: Operations for Growing Teams">
+  <meta property="og:description" content="Greg Lees builds operating infrastructure from scratch for growing teams. BizOps and RevOps for Series A–B startups.">
+  <meta property="og:image" content="https://greglees.me/og-banner.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Greg Lees: Operations for Growing Teams">
+  <meta name="twitter:description" content="Greg Lees builds operating infrastructure from scratch for growing teams. BizOps and RevOps for Series A–B startups.">
+  <meta name="twitter:image" content="https://greglees.me/og-banner.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --c-bg:         #0d1117;
+      --c-dark:       #282c35;
+      --c-surface:    rgba(136, 163, 191, 0.07);
+      --c-hero:       #0d1117;
+      --c-text:       #ffffff;
+      --c-muted:      #b0bec8;
+      --c-light:      rgba(255,255,255,0.35);
+      --c-accent:     #88a3bf;
+      --c-accent-h:   #6e8fab;
+      --c-border:     rgba(136, 163, 191, 0.15);
+      --c-hero-muted: #b0c4d8;
+      --font: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --max-w: 1100px;
+      --section-y: 5.5rem;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--c-text);
+      background-color: var(--c-bg);
+      background-image:
+        radial-gradient(ellipse 75% 50% at 5%   10%, rgba(136,163,191,0.14) 0%, transparent 55%),
+        radial-gradient(ellipse 55% 40% at 95%  40%, rgba(136,163,191,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse 65% 50% at 10%  75%, rgba(136,163,191,0.09) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 40% at 90%  95%, rgba(40,44,53,0.6)     0%, transparent 55%);
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── UTILITIES ── */
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section {
+      padding: var(--section-y) 1.5rem;
+    }
+
+    .section-alt { background: transparent; }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-accent);
+      margin-bottom: 0.625rem;
+    }
+
+    .section-heading {
+      font-size: 2.3125rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      color: var(--c-text);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      border: 2px solid transparent;
+      line-height: 1;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .btn-primary {
+      background: var(--c-accent);
+      color: var(--c-dark);
+      border-color: var(--c-accent);
+    }
+    .btn-primary:hover { background: var(--c-accent-h); border-color: var(--c-accent-h); color: var(--c-dark); }
+
+    .btn-ghost {
+      background: transparent;
+      color: #fff;
+      border-color: rgba(255,255,255,0.35);
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.07); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--c-text);
+      border-color: var(--c-border);
+    }
+    .btn-outline:hover { border-color: var(--c-text); }
+
+    /* ── NAV ── */
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(13, 17, 23, 0.5);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .nav__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav__logo {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+    }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .nav__link {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--c-text);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav__link:hover { color: #fff; }
+
+    .nav__section-links {
+      display: none;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    @media (min-width: 860px) { .nav__section-links { display: flex; } }
+
+    .nav__cta {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--c-dark);
+      background: var(--c-accent);
+      text-decoration: none;
+      padding: 0.4rem 0.875rem;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .nav__cta:hover { background: var(--c-accent-h); color: var(--c-dark); }
+
+    /* ── HERO ── */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+      padding: 6rem 1.5rem 5.5rem;
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 20%, rgba(136, 163, 191, 0.1) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .hero__inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0;
+    }
+
+    .hero__photo {
+      flex-shrink: 0;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid rgba(255,255,255,0.12);
+      margin-bottom: 2rem;
+    }
+
+    .hero__photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+
+    .hero__headline {
+      font-size: 2.625rem;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      text-transform: uppercase;
+      color: #fff;
+      max-width: 18ch;
+      margin: 0 auto 1.5rem;
+    }
+
+    .hero__sub {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--c-text);
+      line-height: 1.6;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero__cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    .hero__stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--c-border);
+    }
+
+    .hero__stat-number {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--c-accent);
+      display: block;
+      line-height: 1.1;
+      margin-bottom: 0.25rem;
+    }
+
+    .hero__stat-label {
+      font-size: 1rem;
+      color: var(--c-text);
+      line-height: 1.45;
+      flex: 1;
+    }
+
+    .hero__stat {
+      text-align: center;
+      max-width: 200px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero__pullquote {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--c-border);
+      text-align: center;
+    }
+
+    .hero__pullquote q {
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--c-text);
+      line-height: 1.6;
+      quotes: none;
+    }
+
+    .hero__pullquote-attr {
+      display: block;
+      margin-top: 0.625rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--c-accent);
+    }
+
+    /* ── WHY A GENERALIST ── */
+
+    .manifesto { max-width: 100%; }
+
+    .manifesto__lede {
+      font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+      font-weight: 600;
+      line-height: 1.45;
+      color: var(--c-text);
+      margin-bottom: 1.5rem;
+    }
+
+    .manifesto p {
+      font-size: 1.125rem;
+      color: var(--c-text);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .manifesto p:last-child {
+      color: var(--c-text);
+      font-weight: 500;
+      margin-bottom: 0;
+    }
+
+    /* ── HOW I OPERATE ── */
+
+    .operate__intro {
+      font-size: 1.125rem;
+      color: var(--c-text);
+      line-height: 1.7;
+      margin-top: 0.625rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .principles {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .principle {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 10px;
+      padding: 1.25rem 1.625rem;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .principle__title {
+      font-size: 1.625rem;
+      font-weight: 600;
+      color: var(--c-accent);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.375rem;
+    }
+
+    .principle__desc {
+      font-size: 1rem;
+      color: var(--c-text);
+      line-height: 1.55;
+    }
+
+    /* ── EXPERTISE ── */
+
+    .expertise__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+
+    .expertise__card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 10px;
+      padding: 1.75rem;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .expertise__title {
+      font-size: 1.625rem;
+      font-weight: 600;
+      color: var(--c-accent);
+      letter-spacing: -0.015em;
+      margin-bottom: 0.5rem;
+    }
+
+    .expertise__desc {
+      font-size: 1rem;
+      color: var(--c-text);
+      line-height: 1.65;
+    }
+
+    /* ── CERTIFICATIONS ── */
+
+    .certs__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .certs__grid { grid-template-columns: 1fr; }
+    }
+
+    .cert-card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 12px;
+      padding: 2rem 1.5rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      cursor: default;
+      transition: border-color 0.25s, background 0.25s;
+    }
+
+    .cert-card:hover {
+      border-color: rgba(136, 163, 191, 0.4);
+      background: rgba(136, 163, 191, 0.11);
+    }
+
+    .cert-card img {
+      width: 40px;
+      height: 40px;
+      display: block;
+      opacity: 0.8;
+      transition: opacity 0.25s;
+    }
+
+    .cert-card:hover img { opacity: 1; }
+
+    .cert-card__details {
+      display: grid;
+      grid-template-rows: 0fr;
+      width: 100%;
+      margin-top: 0;
+      transition: grid-template-rows 0.35s ease, margin-top 0.35s ease;
+    }
+
+    .cert-card:hover .cert-card__details {
+      grid-template-rows: 1fr;
+      margin-top: 1.25rem;
+    }
+
+    .cert-card__inner {
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .cert-card__tool {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--c-accent);
+      margin-bottom: 0.375rem;
+    }
+
+    .cert-card__list {
+      font-size: 0.875rem;
+      color: var(--c-text);
+      font-style: italic;
+      line-height: 1.65;
+    }
+
+    /* ── PROJECTS ── */
+
+    .projects__grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+
+    .project-card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .project-card__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    @media (max-width: 639px) {
+      .project-card__header { flex-direction: column; gap: 0.75rem; }
+    }
+
+    .project-card__body {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .project-card__main {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 639px) {
+      .project-card__main { flex-direction: column; }
+    }
+
+    .project-card__right {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .project-card__image {
+      flex-shrink: 0;
+      width: 280px;
+      height: 187px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(136,163,191,0.06);
+      border: 1px solid rgba(136,163,191,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(136,163,191,0.4);
+    }
+
+    @media (max-width: 639px) {
+      .project-card__image { width: 100%; min-height: 160px; align-self: auto; }
+    }
+
+    .project-card__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .project-card__title {
+      font-size: 1.625rem;
+      font-weight: 700;
+      color: var(--c-text);
+      letter-spacing: -0.015em;
+      line-height: 1.3;
+    }
+
+    .project-card__story {
+      font-size: 1rem;
+      color: var(--c-text);
+      line-height: 1.7;
+    }
+
+    .project-card__outcome-row {
+      border-left: 3px solid var(--c-accent);
+      padding-left: 1rem;
+    }
+
+    .project-card__outcome {
+      font-size: 1rem;
+      color: var(--c-text);
+      font-weight: 500;
+      line-height: 1.65;
+      margin-bottom: 0;
+    }
+
+    .project-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.375rem;
+      justify-content: flex-end;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 639px) {
+      .project-card__tags { justify-content: flex-start; }
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--c-text);
+      background: rgba(136,163,191,0.1);
+      border: 1px solid rgba(136,163,191,0.2);
+      border-radius: 4px;
+      padding: 0.25rem 0.5rem;
+    }
+
+    /* ── TESTIMONIALS ── */
+
+    .testimonials__carousel {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+
+    .testimonials__track {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%);
+    }
+
+    .testimonials__inner {
+      display: flex;
+      gap: 1.5rem;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    .testimonial__arrow {
+      flex-shrink: 0;
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 50%;
+      border: 1px solid var(--c-border);
+      background: none;
+      color: var(--c-accent);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .testimonial__arrow:hover {
+      border-color: var(--c-accent);
+      color: var(--c-accent-h);
+    }
+
+    .testimonial {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 12px;
+      padding: 2rem;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      flex: 0 0 65%;
+      opacity: 0.35;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+    }
+
+    .testimonial--active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .testimonial__pull {
+      font-size: 1rem;
+      color: var(--c-text);
+      line-height: 1.65;
+      font-style: italic;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .testimonial__expand {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.35s ease, margin-bottom 0.35s ease;
+      margin-bottom: 0;
+    }
+
+    .testimonial--expanded .testimonial__expand {
+      grid-template-rows: 1fr;
+      margin-bottom: 0.75rem;
+    }
+
+    .testimonial__expand-inner {
+      overflow: hidden;
+    }
+
+    .testimonial__quote {
+      font-size: 0.9375rem;
+      color: var(--c-text);
+      line-height: 1.75;
+      padding-top: 0.75rem;
+      font-style: italic;
+      opacity: 0.85;
+    }
+
+    .testimonial__toggle {
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: var(--font);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--c-accent);
+      cursor: pointer;
+      margin-bottom: 1.25rem;
+      display: block;
+      transition: color 0.15s;
+    }
+
+    .testimonial__toggle:hover { color: var(--c-accent-h); }
+
+    .testimonial--expanded .testimonial__pull { display: none; }
+
+    .testimonial__name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--c-accent);
+    }
+
+    .testimonial__role {
+      font-size: 0.875rem;
+      color: var(--c-text);
+      margin-top: 0.2rem;
+      line-height: 1.4;
+    }
+
+    /* ── CONTACT ── */
+
+    .contact__inner { max-width: 100%; }
+
+    .contact__heading {
+      font-size: 2.3125rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      margin-top: 0.375rem;
+      margin-bottom: 0.875rem;
+    }
+
+    .contact__sub {
+      font-size: 1.125rem;
+      color: var(--c-text);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .contact__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    #contact {
+      background: transparent;
+      position: relative;
+    }
+
+    #contact::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 50% 100%, rgba(136,163,191,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    #contact > * { position: relative; z-index: 1; }
+
+
+    /* ── CARD INTERACTIONS ── */
+
+    .principle,
+    .expertise__card,
+    .project-card,
+    .testimonial {
+      box-shadow: 0 1px 4px rgba(40, 44, 53, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .principle:hover,
+    .expertise__card:hover,
+    .project-card:hover,
+    .testimonial:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(40, 44, 53, 0.13);
+    }
+
+    /* ── FOOTER ── */
+
+    footer {
+      background: transparent;
+      border-top: none;
+      color: rgba(136,163,191,0.4);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    footer a {
+      color: var(--c-hero-muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    footer a:hover { color: #fff; }
+
+    /* ── RESPONSIVE ── */
+
+    @media (min-width: 640px) {
+      .principles      { grid-template-columns: repeat(2, 1fr); }
+      .expertise__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+
+    @media (min-width: 960px) {
+      .principles { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ── DOT DRIFT ── */
+
+    @keyframes dotsDrift {
+      from { background-position: 0 0; }
+      to   { background-position: 24px 24px; }
+    }
+
+    /* ── SCROLL PROGRESS BAR ── */
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--c-accent), rgba(136,163,191,0.5));
+      z-index: 300;
+      pointer-events: none;
+      transition: width 0.08s linear;
+    }
+
+    /* ── SCROLL REVEALS ── */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: none;
+    }
+
+    .stagger > * {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .stagger.in-view > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.04s; }
+    .stagger.in-view > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.11s; }
+    .stagger.in-view > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.18s; }
+    .stagger.in-view > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.25s; }
+    .stagger.in-view > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.32s; }
+    .stagger.in-view > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 0.39s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .stagger > * { opacity: 1; transform: none; transition: none; }
+      .scroll-progress { display: none; }
+      .cert-card__details { grid-template-rows: 1fr; margin-top: 1.25rem; }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 639px) {
+      .nav__pipe,
+      .nav__role { display: none; }
+
+      .hero {
+        padding: 3.5rem 1.5rem 3rem;
+        min-height: auto;
+      }
+
+      .hero__headline { font-size: 1.875rem; }
+
+      .hero__stats {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+
+      .hero__stat {
+        max-width: none;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 1rem;
+        text-align: left;
+      }
+
+      .hero__stat-number {
+        flex-shrink: 0;
+        font-size: 1.5rem;
+      }
+
+      .hero__stat-label { flex: 1; }
+
+      .testimonial { flex: 0 0 85%; }
+
+      .testimonials__carousel { gap: 0.75rem; }
+
+      .section-heading { font-size: 1.625rem; }
+
+      .contact__heading { font-size: 1.75rem; }
+
+      .project-card__outcome-row { padding-left: 0.75rem; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <nav class="nav" aria-label="Site navigation">
+    <div class="nav__inner">
+      <div style="display:flex; align-items:center; gap:0.3rem;">
+        <a class="nav__logo" href="#">Greg Lees</a>
+        <span class="nav__pipe" style="color: var(--c-muted); font-size: 1.125rem; line-height:1;">|</span>
+        <span class="nav__role" style="font-size: 1.125rem; font-weight: 700; color: var(--c-accent); text-transform: uppercase; letter-spacing: -0.01em;">Business Operations Manager</span>
+      </div>
+      <div class="nav__links">
+        <div class="nav__section-links">
+          <a class="nav__link" href="#operate">Method</a>
+          <a class="nav__link" href="#projects">Work</a>
+          <a class="nav__link" href="#generalist">Why</a>
+          <a class="nav__link" href="#contact">Contact</a>
+        </div>
+        <a class="nav__cta" href="https://drive.google.com/file/d/1PHcS4imdNLjaslvCgWToaorv7goXAc8F/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- HERO -->
+    <section id="hero" class="hero" aria-labelledby="hero-headline">
+      <div class="hero__inner">
+        <div class="hero__photo">
+  <img src="profile.jpg" alt="Greg Lees">
+        </div>
+        <h1 id="hero-headline" class="hero__headline">I design operations<br>for growing teams</h1>
+        <h2 class="hero__sub">Giving your team the clarity,<br>consistency, and a roadmap to scale</h2>
+        <div class="hero__cta">
+          <a class="btn btn-primary" href="https://drive.google.com/file/d/1PHcS4imdNLjaslvCgWToaorv7goXAc8F/view?usp=sharing" target="_blank" rel="noopener noreferrer">View Resume</a>
+          <a class="btn btn-ghost" href="https://linkedin.com/in/greglees" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        </div>
+        <div class="hero__stats reveal">
+          <div class="hero__stat">
+            <span class="hero__stat-number">$3.3M+</span>
+            <span class="hero__stat-label">in recurring revenue supported by operations built from scratch</span>
+          </div>
+          <div class="hero__stat">
+            <span class="hero__stat-number">3x</span>
+            <span class="hero__stat-label">Ops-supported<br>headcount growth<br>at a high-growth<br>tech startup</span>
+          </div>
+          <div class="hero__stat">
+            <span class="hero__stat-number">30 Days</span>
+            <span class="hero__stat-label">to build v1 of marketing operations at LJB from zero</span>
+          </div>
+        </div>
+        <div class="hero__pullquote reveal">
+          <q>"Greg is excellent at making progress and solving problems, even with uncertainty and unclear direction."</q>
+          <span class="hero__pullquote-attr">Stacie H. <span style="color: var(--c-muted);">&nbsp;|&nbsp;</span> Director, Digital Transformation Center <span style="color: var(--c-muted);">&nbsp;|&nbsp;</span> UDRI</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW I OPERATE -->
+    <section id="operate" class="section section-alt" aria-labelledby="operate-heading">
+      <div class="container">
+        <h2 id="operate-heading" class="section-heading">I don't wait for a playbook</h2>
+        <p class="operate__intro reveal">When I join a team, I orient fast, find what's broken or missing, and start building, while keeping the people who have to live in these systems at the center of every decision.</p>
+        <div class="principles stagger">
+          <div class="principle">
+<h3 class="principle__title">Clarity First</h3>
+            <p class="principle__desc">Define success before building solutions.</p>
+          </div>
+          <div class="principle">
+<h3 class="principle__title">Simplify Relentlessly</h3>
+            <p class="principle__desc">Great systems reduce effort, not add to it.</p>
+          </div>
+          <div class="principle">
+<h3 class="principle__title">Design for Adoption</h3>
+            <p class="principle__desc">Tools only work when people actually use them.</p>
+          </div>
+          <div class="principle">
+<h3 class="principle__title">Bias for Momentum</h3>
+            <p class="principle__desc">Progress beats perfection.</p>
+          </div>
+          <div class="principle">
+<h3 class="principle__title">Built to Evolve</h3>
+            <p class="principle__desc">Systems should scale with the team, not constrain it.</p>
+          </div>
+          <div class="principle">
+<h3 class="principle__title">Stay Lean</h3>
+            <p class="principle__desc">Don't spend money or add tools until you've outgrown what you have. Complexity is a cost.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERTISE -->
+    <section id="expertise" class="section" aria-labelledby="expertise-heading">
+      <div class="container">
+        <h2 id="expertise-heading" class="section-heading">I Build...</h2>
+        <div class="expertise__grid stagger">
+          <div class="expertise__card">
+            <h3 class="expertise__title">Operating Infrastructure</h3>
+            <p class="expertise__desc">Most growing teams are running on improvised systems. I replace the duct tape with a foundation that actually holds.</p>
+          </div>
+          <div class="expertise__card">
+            <h3 class="expertise__title">Processes That Stick</h3>
+            <p class="expertise__desc">I don't hand over a process doc and disappear. I design workflows people use, then make sure they do.</p>
+          </div>
+          <div class="expertise__card">
+            <h3 class="expertise__title">Teams That Execute</h3>
+            <p class="expertise__desc">I align the people side with the systems side so nothing falls between roles and nothing has to be managed twice.</p>
+          </div>
+          <div class="expertise__card">
+            <h3 class="expertise__title">Strategy That Ships</h3>
+            <p class="expertise__desc">Strategy without an operating plan is just a slide deck. I build the bridge between the two.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS & CASE STUDIES -->
+    <section id="projects" class="section" aria-labelledby="projects-heading">
+      <div class="container">
+        <h2 id="projects-heading" class="section-heading">Work That Shipped</h2>
+        <div class="projects__grid stagger">
+
+          <article class="project-card">
+            <div class="project-card__header">
+              <h3 class="project-card__title">AI-Assisted HubSpot Landing Page</h3>
+            </div>
+            <div class="project-card__body">
+              <div class="project-card__main">
+                <div class="project-card__right">
+                  <p class="project-card__story">HubSpot's native landing page builder puts a ceiling on what your brand can look like. Fixed layouts, limited flexibility, and a finished product that rarely matches what marketing actually envisioned. Building the page with AI instead of the native tool removed that ceiling and gave the team something cleaner, more polished, and fully on-brand. I used Claude to design and iterate, then Claude Code to finalize and produce clean HTML, published directly in HubSpot via Design Manager.</p>
+                </div>
+                <div class="project-card__image">
+                  <img src="project-hubspot.jpg" alt="AI-Assisted HubSpot Landing Page">
+                </div>
+              </div>
+              <div class="project-card__outcome-row">
+                <p class="project-card__outcome">A fully custom landing page hosted in HubSpot, without a developer, without a third-party page builder, and without compromising on design.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-card__header">
+              <h3 class="project-card__title">GTM Operations Infrastructure</h3>
+            </div>
+            <div class="project-card__body">
+              <div class="project-card__main">
+                <div class="project-card__right">
+                  <p class="project-card__story">LJB formed a new GTM team that grew to 14 people and no operational foundation. Leads came in and disappeared. There was no shared definition of a qualified lead, no routing, no reporting, and no way to know what happened after a handoff. I built the whole system that included lifecycle stages, MQL criteria, contact management, segmentation, automated workflows, and real-time reporting in HubSpot.</p>
+                </div>
+                <div class="project-card__image">
+                  <img src="project-gtm.jpg" alt="GTM Operations Infrastructure">
+                </div>
+              </div>
+              <div class="project-card__outcome-row">
+                <p class="project-card__outcome">A fully systematized GTM function built from zero, giving a 14-person team the operational foundation to execute without the administrative overhead.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-card__header">
+              <h3 class="project-card__title">Partnership Operations from 0-to-1</h3>
+            </div>
+            <div class="project-card__body">
+              <div class="project-card__main">
+                <div class="project-card__right">
+                  <p class="project-card__story">The Dayton Dragons were managing $3.3M in annual partnership revenue the way a lot of teams manage things when they're moving fast, across inboxes, individual memory, and spreadsheets nobody else could follow. With 60+ accounts and cross-functional execution involved, there was no single place where any of it lived. Activation workflows didn't exist and delivery was held together by different individuals. I built the infrastructure from scratch to develop centralized systems, delivery workflows, partner communications, and the engine to run it all.</p>
+                </div>
+                <div class="project-card__image">
+                  <img src="project-sponsorship.svg" alt="Partnership tracking spreadsheet">
+                </div>
+              </div>
+              <div class="project-card__outcome-row">
+                <p class="project-card__outcome">A partnerships operation built from nothing that became the operational backbone for one of Minor League Baseball's best-attended franchises.</p>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section id="tools" class="section section-alt" aria-labelledby="tools-heading">
+      <div class="container">
+        <h2 id="tools-heading" class="section-heading">Certifications</h2>
+        <div class="certs__grid stagger">
+
+          <div class="cert-card">
+            <img src="https://cdn.simpleicons.org/notion/ffffff" alt="Notion" width="40" height="40">
+            <div class="cert-card__details">
+              <div class="cert-card__inner">
+                <p class="cert-card__tool">Notion</p>
+                <p class="cert-card__list">Essentials Certification<br>Workflows Certification<br>Advanced Certification</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cert-card">
+            <img src="https://cdn.simpleicons.org/make/ffffff" alt="Make" width="40" height="40">
+            <div class="cert-card__details">
+              <div class="cert-card__inner">
+                <p class="cert-card__tool">Make</p>
+                <p class="cert-card__list">Foundation Certification</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cert-card">
+            <img src="https://cdn.simpleicons.org/hubspot/ffffff" alt="HubSpot" width="40" height="40">
+            <div class="cert-card__details">
+              <div class="cert-card__inner">
+                <p class="cert-card__tool">HubSpot</p>
+                <p class="cert-card__list">Marketing Hub Certification<br>Sales Hub Certification<br>Revenue Operations Certification</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="section section-alt" aria-labelledby="testimonials-heading">
+      <div class="container">
+        <h2 id="testimonials-heading" class="section-heading">What People Say</h2>
+        <div class="testimonials__carousel stagger">
+
+          <button class="testimonial__arrow testimonial__arrow--prev" aria-label="Previous testimonial">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <div class="testimonials__track">
+          <div class="testimonials__inner">
+
+            <div class="testimonial">
+              <p class="testimonial__pull">"The work he has done at the Dragons and for his corporate partners never goes unnoticed."</p>
+              <div class="testimonial__expand"><div class="testimonial__expand-inner"><blockquote class="testimonial__quote">"I've had the pleasure of working with Greg for more than 6 years. He's a huge asset to our team in many ways. Greg is hardworking, dedicated, trustworthy, smart, honest, and detail oriented. He's incredibly humble and has a passion to serve others. The work he has done at the Dragons and for his corporate partners never goes unnoticed; he advocates for what he believes in and I admire that. I can't say enough about Greg! He's simply awesome."</blockquote></div></div>
+              <button class="testimonial__toggle" aria-expanded="false">Read more</button>
+              <p class="testimonial__name">Brandy G.</p>
+              <p class="testimonial__role">Executive Vice President &amp; Assistant GM</p>
+              <p class="testimonial__role">Dayton Dragons Baseball Club</p>
+            </div>
+
+            <div class="testimonial">
+              <p class="testimonial__pull">"Greg is excellent at making progress and solving problems, even with uncertainty and unclear direction."</p>
+              <div class="testimonial__expand"><div class="testimonial__expand-inner"><blockquote class="testimonial__quote">"Greg is excellent at making progress and solving problems, even with uncertainty and unclear direction. He regularly comes to the table with new ideas or solutions. He has been an excellent and supportive teammate with a 'can-do' attitude, always looking to make something better at the end of the day."</blockquote></div></div>
+              <button class="testimonial__toggle" aria-expanded="false">Read more</button>
+              <p class="testimonial__name">Stacie H.</p>
+              <p class="testimonial__role">Director, Digital Transformation Center</p>
+              <p class="testimonial__role">University of Dayton Research Institute</p>
+            </div>
+
+            <div class="testimonial">
+              <p class="testimonial__pull">"His ability to bring structure and clarity to any project is remarkable."</p>
+              <div class="testimonial__expand"><div class="testimonial__expand-inner"><blockquote class="testimonial__quote">"Greg's ability to bring structure and clarity to any project is remarkable. He builds useful systems for actually getting things done, and then just executes consistently. And because he's deeply curious, he's always bringing new tools, ideas, and approaches to the table. On top of that, he's one of the most considerate (and kind) people I know. Always looking out for other folks, and more than happy to help in any way he can. Greg is a great person to work with and an even better friend."</blockquote></div></div>
+              <button class="testimonial__toggle" aria-expanded="false">Read more</button>
+              <p class="testimonial__name">Max Carone</p>
+              <p class="testimonial__role">RevOps Strategist</p>
+              <p class="testimonial__role">Lean Layer</p>
+            </div>
+
+            <div class="testimonial">
+              <p class="testimonial__pull">"He has a well earned reputation for being the person you can go to with tough problems."</p>
+              <div class="testimonial__expand"><div class="testimonial__expand-inner"><blockquote class="testimonial__quote">"Greg was the first person to help me settle into the company and it was such a gift. He has a well earned reputation for being the person you can go to with tough problems. You know he will deliver a well thought out, big picture solution while being precise about the details and impacts. His initiative, willingness to learn, and genuine desire to help have had huge impacts over the years that I have worked with him. Greg is an MVP addition to any team he supports, and I would highly recommend him to any organization."</blockquote></div></div>
+              <button class="testimonial__toggle" aria-expanded="false">Read more</button>
+              <p class="testimonial__name">Misty Kinsey</p>
+              <p class="testimonial__role">Proposal Manager</p>
+              <p class="testimonial__role">Reveal Technology</p>
+            </div>
+
+            <div class="testimonial">
+              <p class="testimonial__pull">"The glue in keeping all key orgs understood of process and procedural updates."</p>
+              <div class="testimonial__expand"><div class="testimonial__expand-inner"><blockquote class="testimonial__quote">"Greg worked smartly and efficiently to establish and implement business processes within the organization. Most of the time being the glue in keeping all key orgs understood of process and procedural updates. Greg was at his best when working on the go, critically thinking through how process needed to be viewed by all facets of the organization and more importantly, how the process was able to be utilized and adaptable to the changing environment. Greg is a wonderful asset to work with!"</blockquote></div></div>
+              <button class="testimonial__toggle" aria-expanded="false">Read more</button>
+              <p class="testimonial__name">Brad Gatchel</p>
+              <p class="testimonial__role">Division Recruiting Lead</p>
+              <p class="testimonial__role">MTSI</p>
+            </div>
+
+          </div>
+          </div>
+
+          <button class="testimonial__arrow testimonial__arrow--next" aria-label="Next testimonial">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY A GENERALIST -->
+    <section id="generalist" class="section" style="padding-bottom: 2rem;" aria-labelledby="generalist-heading">
+      <div class="container">
+        <h2 class="section-heading" id="generalist-heading">Why Your Team Needs a Generalist</h2>
+        <div class="manifesto reveal">
+          <p class="manifesto__lede">Most early-stage teams don't have an operations problem. They have a "no one owns this" problem.</p>
+          <p>Specialists deepen expertise. Generalists create the connective tissue between it.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact" style="padding-top: 2rem;" aria-labelledby="contact-heading">
+      <div class="container">
+        <div class="contact__inner reveal">
+          <h2 id="contact-heading" class="contact__heading">Let's talk.</h2>
+          <p class="contact__sub">If your team is growing faster than your systems and you're ready to fix that, I'd like to hear about it.</p>
+          <div class="contact__links">
+            <a class="btn btn-primary" href="https://drive.google.com/file/d/1PHcS4imdNLjaslvCgWToaorv7goXAc8F/view?usp=sharing" target="_blank" rel="noopener noreferrer">View Resume</a>
+            <a class="btn btn-outline" href="https://linkedin.com/in/greglees" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Greg Lees</p>
+  </footer>
+
+  <script>
+  (function () {
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Progress bar
+    var bar = document.createElement('div');
+    bar.className = 'scroll-progress';
+    document.body.prepend(bar);
+    window.addEventListener('scroll', function () {
+      var total = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = total > 0 ? (window.scrollY / total * 100) + '%' : '0%';
+    }, { passive: true });
+
+    // Testimonial carousel
+    var testimonialCards = Array.from(document.querySelectorAll('.testimonial'));
+    var testimonialInner = document.querySelector('.testimonials__inner');
+    var currentTestimonial = 1;
+
+    function showTestimonial(index) {
+      testimonialCards.forEach(function (card, i) {
+        var active = i === index;
+        card.classList.toggle('testimonial--active', active);
+        if (!active && card.classList.contains('testimonial--expanded')) {
+          card.classList.remove('testimonial--expanded');
+          var btn = card.querySelector('.testimonial__toggle');
+          if (btn) { btn.setAttribute('aria-expanded', 'false'); btn.textContent = 'Read more'; }
+        }
+      });
+      var track = testimonialInner.parentElement;
+      var trackWidth = track.offsetWidth;
+      var cardWidth = testimonialCards[0].offsetWidth;
+      var gap = parseFloat(getComputedStyle(testimonialInner).columnGap) || 24;
+      var offset = index * (cardWidth + gap) - (trackWidth - cardWidth) / 2;
+      testimonialInner.style.transform = 'translateX(' + (-offset) + 'px)';
+    }
+
+    document.querySelector('.testimonial__arrow--prev').addEventListener('click', function () {
+      currentTestimonial = (currentTestimonial - 1 + testimonialCards.length) % testimonialCards.length;
+      showTestimonial(currentTestimonial);
+    });
+
+    document.querySelector('.testimonial__arrow--next').addEventListener('click', function () {
+      currentTestimonial = (currentTestimonial + 1) % testimonialCards.length;
+      showTestimonial(currentTestimonial);
+    });
+
+    window.addEventListener('resize', function () { showTestimonial(currentTestimonial); });
+    requestAnimationFrame(function () { showTestimonial(currentTestimonial); });
+
+    // Testimonial expand/collapse
+    document.querySelectorAll('.testimonial__toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var card = btn.closest('.testimonial');
+        var expanded = card.classList.toggle('testimonial--expanded');
+        btn.setAttribute('aria-expanded', expanded);
+        btn.textContent = expanded ? 'Read less' : 'Read more';
+      });
+    });
+
+    // Scroll reveals
+    if (!reduced) {
+      document.querySelectorAll('.reveal, .stagger').forEach(function (el) {
+        var io = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) {
+            el.classList.add('in-view');
+            io.disconnect();
+          }
+        }, { threshold: 0.12 });
+        io.observe(el);
+      });
+    }
+  })();
+  </script>
+</body>
+</html>

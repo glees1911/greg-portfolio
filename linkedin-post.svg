@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+  <defs>
+    <radialGradient id="g1" cx="5%" cy="10%" r="75%" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="rgba(136,163,191,0.14)"/>
+      <stop offset="55%" stop-color="transparent"/>
+    </radialGradient>
+    <radialGradient id="g2" cx="95%" cy="40%" r="55%" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="rgba(136,163,191,0.08)"/>
+      <stop offset="50%" stop-color="transparent"/>
+    </radialGradient>
+    <radialGradient id="g3" cx="10%" cy="75%" r="65%" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="rgba(136,163,191,0.09)"/>
+      <stop offset="50%" stop-color="transparent"/>
+    </radialGradient>
+    <radialGradient id="g4" cx="90%" cy="95%" r="50%" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="rgba(40,44,53,0.6)"/>
+      <stop offset="55%" stop-color="transparent"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1080" height="1080" fill="#0d1117"/>
+  <rect width="1080" height="1080" fill="url(#g1)"/>
+  <rect width="1080" height="1080" fill="url(#g2)"/>
+  <rect width="1080" height="1080" fill="url(#g3)"/>
+  <rect width="1080" height="1080" fill="url(#g4)"/>
+</svg>
