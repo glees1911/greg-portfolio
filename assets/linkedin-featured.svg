@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1004" height="524" viewBox="0 0 1004 524">
+  <defs>
+    <radialGradient id="g1" cx="5%" cy="10%" r="75%" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="rgba(136,163,191,0.18)"/>
+      <stop offset="55%" stop-color="transparent"/>
+    </radialGradient>
+    <radialGradient id="g2" cx="95%" cy="30%" r="60%" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="rgba(136,163,191,0.10)"/>
+      <stop offset="50%" stop-color="transparent"/>
+    </radialGradient>
+    <radialGradient id="g3" cx="10%" cy="90%" r="65%" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="rgba(136,163,191,0.10)"/>
+      <stop offset="50%" stop-color="transparent"/>
+    </radialGradient>
+    <radialGradient id="g4" cx="92%" cy="95%" r="50%" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="rgba(40,44,53,0.7)"/>
+      <stop offset="55%" stop-color="transparent"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1004" height="524" fill="#161b22"/>
+  <rect width="1004" height="524" fill="url(#g1)"/>
+  <rect width="1004" height="524" fill="url(#g2)"/>
+  <rect width="1004" height="524" fill="url(#g3)"/>
+  <rect width="1004" height="524" fill="url(#g4)"/>
+
+  <circle cx="502" cy="160" r="78" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="3"/>
+  <clipPath id="photoClip"><circle cx="502" cy="160" r="75"/></clipPath>
+  <image href="../profile.jpg" x="427" y="85" width="150" height="150" clip-path="url(#photoClip)" preserveAspectRatio="xMidYMid slice"/>
+
+  <text x="502" y="290" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="2.5" fill="#88a3bf">GREG LEES</text>
+
+  <text x="502" y="358" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="48" font-weight="700" letter-spacing="-1" fill="#ffffff">I design operations</text>
+  <text x="502" y="416" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="48" font-weight="700" letter-spacing="-1" fill="#ffffff">for growing teams</text>
+</svg>
