@@ -1,0 +1,30 @@
+{
+  "name": "primary",
+  "version": "1.0.0",
+  "description": "Greg Lees Portfolio Website",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glees1911/greg-portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/glees1911/greg-portfolio/issues"
+  },
+  "homepage": "https://github.com/glees1911/greg-portfolio#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  },
+  "devDependencies": {
+    "vite": "^8.0.16"
+  }
+}
