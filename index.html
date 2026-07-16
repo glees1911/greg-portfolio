@@ -75,15 +75,6 @@
 
     .section-alt { background: transparent; }
 
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--c-accent);
-      margin-bottom: 0.625rem;
-    }
-
     .section-heading {
       font-size: 2.3125rem;
       font-weight: 700;
@@ -330,7 +321,7 @@
 
     .manifesto__lede {
       font-size: clamp(1.125rem, 2.5vw, 1.375rem);
-      font-weight: 600;
+      font-weight: 400;
       line-height: 1.45;
       color: var(--c-text);
       margin-bottom: 1.5rem;
@@ -345,7 +336,7 @@
 
     .manifesto p:last-child {
       color: var(--c-text);
-      font-weight: 500;
+      font-weight: 400;
       margin-bottom: 0;
     }
 
@@ -388,32 +379,145 @@
       line-height: 1.55;
     }
 
-    /* ── EXPERTISE ── */
+    /* ── AI AS A FORCE MULTIPLIER ── */
 
-    .expertise__list {
+    :root {
+      --fm-1: #8fb3d9;
+    }
+
+    .fm__intro {
+      font-size: 1.125rem;
+      color: var(--c-text);
+      line-height: 1.7;
+      margin-top: 0.625rem;
+      margin-bottom: 2.5rem;
+      max-width: 60ch;
+    }
+
+    .fm__staircase {
       display: flex;
       flex-direction: column;
+      gap: 1.5rem;
       margin-top: 2.5rem;
-      border-top: 1px solid var(--c-border);
     }
 
-    .expertise__item {
-      padding: 1.75rem 0;
-      border-bottom: 1px solid var(--c-border);
+    .fm-row {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-left: 4px solid var(--fm-1);
+      border-radius: 12px;
+      padding: 1.75rem;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 1px 4px rgba(40, 44, 53, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, width 0.2s ease;
     }
 
-    .expertise__title {
-      font-size: 1.625rem;
+    .fm-row:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(40, 44, 53, 0.13);
+    }
+
+    .fm-row--1 { width: 70%; border-left-color: var(--fm-1); }
+    .fm-row--2 { width: 80%; border-left-color: var(--fm-1); }
+    .fm-row--3 { width: 90%; border-left-color: var(--fm-1); }
+    .fm-row--4 { width: 100%; border-left-color: var(--fm-1); }
+
+    .fm-row--1 .fm-row__tag,
+    .fm-row--2 .fm-row__tag,
+    .fm-row--3 .fm-row__tag,
+    .fm-row--4 .fm-row__tag { color: var(--fm-1); background: rgba(143, 179, 217, 0.12); }
+
+    .fm-row__main {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 639px) {
+      .fm-row__main { flex-direction: column; }
+    }
+
+    .fm-row__body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .fm-row__tag {
+      display: inline-block;
+      font-size: 0.875rem;
       font-weight: 600;
-      color: var(--c-accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3125rem 0.75rem;
+      border-radius: 4px;
+      margin-bottom: 0.75rem;
+    }
+
+    .fm-row__title {
+      font-size: 1.625rem;
+      font-weight: 700;
+      color: var(--c-text);
       letter-spacing: -0.015em;
+      line-height: 1.3;
+      margin-bottom: 0.75rem;
+    }
+
+    .fm-row__desc {
+      font-size: 1rem;
+      color: var(--c-text);
+      line-height: 1.7;
+    }
+
+    .fm-row__desc + .fm-row__desc { margin-top: 0.75rem; }
+
+    .fm-row__list {
+      margin: 0.75rem 0;
+      padding-left: 1.25rem;
+    }
+
+    .fm-row__list li {
+      font-size: 1rem;
+      color: var(--c-text);
+      line-height: 1.7;
       margin-bottom: 0.5rem;
     }
 
-    .expertise__desc {
-      font-size: 1rem;
-      color: var(--c-text);
-      line-height: 1.65;
+    .fm-row__list li:last-child { margin-bottom: 0; }
+
+    .fm-row__image {
+      flex-shrink: 0;
+      width: 280px;
+      height: 187px;
+      border-radius: 8px;
+      border: 1px dashed rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.03);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem;
+      color: var(--c-muted);
+      font-size: 0.875rem;
+      overflow: hidden;
+    }
+
+    .fm-row__image:has(img) {
+      height: auto;
+      border-style: solid;
+      border-color: rgba(136,163,191,0.25);
+      padding: 0;
+    }
+
+    .fm-row__image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    @media (max-width: 639px) {
+      .fm-row__image { width: 100%; min-height: 160px; }
+      .fm-row__image:has(img) { min-height: 0; }
     }
 
     /* ── CERTIFICATIONS ── */
@@ -807,6 +911,69 @@
       box-shadow: 0 10px 30px rgba(40, 44, 53, 0.13);
     }
 
+    /* ── ZOOMABLE IMAGES ── */
+
+    .zoomable {
+      cursor: zoom-in;
+      transition: opacity 0.15s ease;
+    }
+
+    .zoomable:hover { opacity: 0.85; }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: rgba(13, 17, 23, 0.9);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease;
+      cursor: zoom-out;
+    }
+
+    .lightbox--open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      display: block;
+    }
+
+    .lightbox__close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .lightbox__close:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.5);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lightbox { transition: none; }
+    }
+
     /* ── FOOTER ── */
 
     footer {
@@ -829,11 +996,6 @@
 
     @media (min-width: 640px) {
       .principles { grid-template-columns: repeat(2, 1fr); }
-    }
-
-
-    @media (min-width: 960px) {
-      .principles { grid-template-columns: repeat(3, 1fr); }
     }
 
     /* ── DOT DRIFT ── */
@@ -951,6 +1113,11 @@
       .contact__heading { font-size: 1.75rem; }
 
       .project-card__outcome-row { padding-left: 0.75rem; }
+
+      .fm-row--1,
+      .fm-row--2,
+      .fm-row--3,
+      .fm-row--4 { width: 100%; }
     }
 
   </style>
@@ -967,8 +1134,9 @@
       </div>
       <div class="nav__links">
         <div class="nav__section-links">
-          <a class="nav__link" href="#operate">Method</a>
           <a class="nav__link" href="#projects">Work</a>
+          <a class="nav__link" href="#ai-multiplier">AI</a>
+          <a class="nav__link" href="#operate">Method</a>
           <a class="nav__link" href="#generalist">Why</a>
           <a class="nav__link" href="#contact">Contact</a>
         </div>
@@ -1012,73 +1180,6 @@
       </div>
     </section>
 
-    <!-- HOW I OPERATE -->
-    <section id="operate" class="section section-alt" aria-labelledby="operate-heading">
-      <div class="container">
-        <h2 id="operate-heading" class="section-heading">I don't wait for a playbook</h2>
-        <p class="operate__intro reveal">When I join a team, I orient fast, find what's broken or missing, and start building, while keeping the people who have to live in these systems at the center of every decision.</p>
-        <div class="principles stagger">
-          <div class="principle">
-<h3 class="principle__title">Clarity First</h3>
-            <p class="principle__desc">Define success before building solutions.</p>
-          </div>
-          <div class="principle">
-<h3 class="principle__title">Simplify Relentlessly</h3>
-            <p class="principle__desc">Great systems reduce effort, not add to it.</p>
-          </div>
-          <div class="principle">
-<h3 class="principle__title">Design for Adoption</h3>
-            <p class="principle__desc">Tools only work when people actually use them.</p>
-          </div>
-          <div class="principle">
-<h3 class="principle__title">Bias for Momentum</h3>
-            <p class="principle__desc">Progress beats perfection.</p>
-          </div>
-          <div class="principle">
-<h3 class="principle__title">Built to Evolve</h3>
-            <p class="principle__desc">Systems should scale with the team, not constrain it.</p>
-          </div>
-          <div class="principle">
-<h3 class="principle__title">Stay Lean</h3>
-            <p class="principle__desc">Don't spend money or add tools until you've outgrown what you have. Complexity is a cost.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- EXPERTISE -->
-    <section id="expertise" class="section" aria-labelledby="expertise-heading">
-      <div class="container">
-        <h2 id="expertise-heading" class="section-heading">I Build...</h2>
-        <div class="expertise__list stagger">
-          <div class="expertise__item">
-            <div>
-              <h3 class="expertise__title">Operating Infrastructure</h3>
-              <p class="expertise__desc">Most growing teams are running on improvised systems. I replace the duct tape with a foundation that actually holds.</p>
-            </div>
-          </div>
-          <div class="expertise__item">
-            <div>
-              <h3 class="expertise__title">Processes That Stick</h3>
-              <p class="expertise__desc">I don't hand over a process doc and disappear. I design workflows people use, then make sure they do.</p>
-            </div>
-          </div>
-          <div class="expertise__item">
-            <div>
-              <h3 class="expertise__title">Teams That Execute</h3>
-              <p class="expertise__desc">I align the people side with the systems side so nothing falls between roles and nothing has to be managed twice.</p>
-            </div>
-          </div>
-          <div class="expertise__item">
-            <div>
-              <h3 class="expertise__title">Strategy That Ships</h3>
-              <p class="expertise__desc">Strategy without an operating plan is just a slide deck. I build the bridge between the two.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- PROJECTS & CASE STUDIES -->
     <section id="projects" class="section" aria-labelledby="projects-heading">
       <div class="container">
@@ -1095,7 +1196,7 @@
                   <p class="project-card__story">HubSpot's native landing page builder puts a ceiling on what your brand can look like. Fixed layouts, limited flexibility, and a finished product that rarely matches what marketing actually envisioned. Building the page with AI instead of the native tool removed that ceiling and gave the team something cleaner, more polished, and fully on-brand. I used Claude to design and iterate, then Claude Code to finalize and produce clean HTML, published directly in HubSpot via Design Manager.</p>
                 </div>
                 <div class="project-card__image">
-                  <img src="project-hubspot.jpg" alt="AI-Assisted HubSpot Landing Page">
+                  <img class="zoomable" src="project-hubspot.jpg" alt="AI-Assisted HubSpot Landing Page">
                 </div>
               </div>
               <div class="project-card__outcome-row">
@@ -1114,7 +1215,7 @@
                   <p class="project-card__story">LJB formed a new GTM team that grew to 14 people and no operational foundation. Leads came in and disappeared. There was no shared definition of a qualified lead, no routing, no reporting, and no way to know what happened after a handoff. I built the whole system that included lifecycle stages, MQL criteria, contact management, segmentation, automated workflows, and real-time reporting in HubSpot.</p>
                 </div>
                 <div class="project-card__image">
-                  <img src="project-gtm.jpg" alt="GTM Operations Infrastructure">
+                  <img class="zoomable" src="project-gtm.jpg" alt="GTM Operations Infrastructure">
                 </div>
               </div>
               <div class="project-card__outcome-row">
@@ -1133,7 +1234,7 @@
                   <p class="project-card__story">The Dayton Dragons were managing $3.3M in annual partnership revenue the way a lot of teams manage things when they're moving fast, across inboxes, individual memory, and spreadsheets nobody else could follow. With 60+ accounts and cross-functional execution involved, there was no single place where any of it lived. Activation workflows didn't exist and delivery was held together by different individuals. I built the infrastructure from scratch to develop centralized systems, delivery workflows, partner communications, and the engine to run it all.</p>
                 </div>
                 <div class="project-card__image">
-                  <img src="project-sponsorship.svg" alt="Partnership tracking spreadsheet">
+                  <img class="zoomable" src="project-sponsorship.svg" alt="Partnership tracking spreadsheet">
                 </div>
               </div>
               <div class="project-card__outcome-row">
@@ -1146,38 +1247,65 @@
       </div>
     </section>
 
-    <!-- CERTIFICATIONS -->
-    <section id="tools" class="section section-alt" aria-labelledby="tools-heading">
+    <!-- AI AS A FORCE MULTIPLIER -->
+    <section id="ai-multiplier" class="section" aria-labelledby="ai-multiplier-heading">
       <div class="container">
-        <h2 id="tools-heading" class="section-heading">Certifications</h2>
-        <div class="certs__grid stagger">
+        <h2 id="ai-multiplier-heading" class="section-heading">AI as a Force Multiplier</h2>
+        <div class="fm__staircase stagger">
 
-          <div class="cert-card">
-            <img src="https://cdn.simpleicons.org/hubspot/ffffff" alt="HubSpot" width="40" height="40">
-            <div class="cert-card__details">
-              <div class="cert-card__inner">
-                <p class="cert-card__tool">HubSpot</p>
-                <p class="cert-card__list">Marketing Hub Certification<br>Sales Hub Certification<br>Revenue Operations Certification</p>
+          <div class="fm-row fm-row--4">
+            <span class="fm-row__tag">Layer 4 | Claude Code</span>
+            <h3 class="fm-row__title">Building Agents</h3>
+            <div class="fm-row__main">
+              <div class="fm-row__body">
+                <p class="fm-row__desc">I built and run production agents at LJB that operate on schedules and handle real business workflows:</p>
+                <ul class="fm-row__list">
+                  <li>A scheduled agent that plans, drafts, brand-edits, and publishes 5 social posts every Tuesday, pulling from a structured library of company messaging and practice guidelines, then routing each post into a colleague's review queue automatically.</li>
+                  <li>A conference research agent that finds missing event details (dates, deadlines, costs, booth requirements) for upcoming industry conferences, flags anything it can't verify instead of guessing, and only writes to our project tracker after I confirm the findings.</li>
+                </ul>
+                <p class="fm-row__desc">I also built this website entirely in Claude Code, from terminal to deployed site.</p>
+              </div>
+              <div class="fm-row__image">
+                <img class="zoomable" src="assets/Content Agents.png" alt="Content agents workflow screenshot">
               </div>
             </div>
           </div>
 
-          <div class="cert-card">
-            <img src="https://cdn.simpleicons.org/notion/ffffff" alt="Notion" width="40" height="40">
-            <div class="cert-card__details">
-              <div class="cert-card__inner">
-                <p class="cert-card__tool">Notion</p>
-                <p class="cert-card__list">Essentials Certification<br>Workflows Certification<br>Advanced Certification</p>
+          <div class="fm-row fm-row--3">
+            <span class="fm-row__tag">Layer 3 | Claude Cowork</span>
+            <h3 class="fm-row__title">Automating Workflows</h3>
+            <div class="fm-row__main">
+              <div class="fm-row__body">
+                <p class="fm-row__desc">Took our HR team's career fair calendar and built a Cowork workflow using a custom content-creation skill: it generates and drafts social posts scheduled one week ahead of each event, and intelligently combines multiple fairs happening in the same week into a single post.</p>
+              </div>
+              <div class="fm-row__image">
+                <img class="zoomable" src="assets/Claude Cowork.png" alt="Claude Cowork workflow screenshot">
               </div>
             </div>
           </div>
 
-          <div class="cert-card">
-            <img src="https://cdn.simpleicons.org/make/ffffff" alt="Make" width="40" height="40">
-            <div class="cert-card__details">
-              <div class="cert-card__inner">
-                <p class="cert-card__tool">Make</p>
-                <p class="cert-card__list">Foundation Certification</p>
+          <div class="fm-row fm-row--2">
+            <span class="fm-row__tag">Layer 2 | Claude Design</span>
+            <h3 class="fm-row__title">Designing &amp; Building</h3>
+            <div class="fm-row__main">
+              <div class="fm-row__body">
+                <p class="fm-row__desc">Designed and built landing pages for LJB in Claude Design, handed them to Claude Code to finish, and deployed them live inside HubSpot. (See <a href="#projects" style="color: var(--c-accent); text-decoration: underline;">Work That Shipped</a> for the full breakdown.)</p>
+              </div>
+              <div class="fm-row__image">
+                <img class="zoomable" src="assets/Claude Design.png" alt="Claude Design workflow screenshot">
+              </div>
+            </div>
+          </div>
+
+          <div class="fm-row fm-row--1">
+            <span class="fm-row__tag">Layer 1 | Claude Chat</span>
+            <h3 class="fm-row__title">Everyday Problem-Solving</h3>
+            <div class="fm-row__main">
+              <div class="fm-row__body">
+                <p class="fm-row__desc">I use AI chat as a first step for fast troubleshooting and building step-by-step plans on new projects, while making sure I actually understand the process, not just outsourcing it.</p>
+              </div>
+              <div class="fm-row__image">
+                <img class="zoomable" src="assets/AI Chat v2.png" alt="AI chat troubleshooting screenshot">
               </div>
             </div>
           </div>
@@ -1255,6 +1383,72 @@
       </div>
     </section>
 
+    <!-- HOW I OPERATE -->
+    <section id="operate" class="section section-alt" aria-labelledby="operate-heading">
+      <div class="container">
+        <h2 id="operate-heading" class="section-heading">I don't wait for a playbook</h2>
+        <p class="operate__intro reveal">When I join a team, I orient fast, find what's broken or missing, and start building, while keeping the people who have to live in these systems at the center of every decision.</p>
+        <div class="principles stagger">
+          <div class="principle">
+<h3 class="principle__title">Clarity First</h3>
+            <p class="principle__desc">Define success before building solutions.</p>
+          </div>
+          <div class="principle">
+<h3 class="principle__title">Design for Adoption</h3>
+            <p class="principle__desc">Tools only work when people actually use them.</p>
+          </div>
+          <div class="principle">
+<h3 class="principle__title">Bias for Momentum</h3>
+            <p class="principle__desc">Progress beats perfection.</p>
+          </div>
+          <div class="principle">
+<h3 class="principle__title">Stay Lean</h3>
+            <p class="principle__desc">Don't spend money or add tools until you've outgrown what you have. Complexity is a cost.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section id="tools" class="section section-alt" aria-labelledby="tools-heading">
+      <div class="container">
+        <h2 id="tools-heading" class="section-heading">Certifications</h2>
+        <div class="certs__grid stagger">
+
+          <div class="cert-card">
+            <img src="https://cdn.simpleicons.org/hubspot/ffffff" alt="HubSpot" width="40" height="40">
+            <div class="cert-card__details">
+              <div class="cert-card__inner">
+                <p class="cert-card__tool">HubSpot</p>
+                <p class="cert-card__list">Marketing Hub Certification<br>Sales Hub Certification<br>Revenue Operations Certification</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cert-card">
+            <img src="https://cdn.simpleicons.org/notion/ffffff" alt="Notion" width="40" height="40">
+            <div class="cert-card__details">
+              <div class="cert-card__inner">
+                <p class="cert-card__tool">Notion</p>
+                <p class="cert-card__list">Essentials Certification<br>Workflows Certification<br>Advanced Certification</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cert-card">
+            <img src="https://cdn.simpleicons.org/make/ffffff" alt="Make" width="40" height="40">
+            <div class="cert-card__details">
+              <div class="cert-card__inner">
+                <p class="cert-card__tool">Make</p>
+                <p class="cert-card__list">Foundation Certification</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- WHY A GENERALIST -->
     <section id="generalist" class="section" style="padding-bottom: 2rem;" aria-labelledby="generalist-heading">
       <div class="container">
@@ -1262,7 +1456,7 @@
         <div class="manifesto reveal">
           <p class="manifesto__lede">Most early-stage teams don't have an operations problem. They have a "no one owns this" problem.</p>
           <p>Specialists deepen expertise. Generalists create the connective tissue between it.</p>
-          <p>For me, that's meant building inside RevOps and Marketing Ops as often as core business operations, wherever a growing team needed someone to own the system, not just a piece of it.</p>
+          <p>For me, that's meant building operations across business, marketing, and revenue functions, and wherever else a growing team needed someone to own the system, not just a piece of it.</p>
         </div>
       </div>
     </section>
@@ -1272,7 +1466,7 @@
       <div class="container">
         <div class="contact__inner reveal">
           <h2 id="contact-heading" class="contact__heading">Let's talk.</h2>
-          <p class="contact__sub">If your team is growing faster than your systems and you're ready to fix that, I'd like to hear about it.</p>
+          <p class="contact__sub">If your team is growing faster than your systems and you're ready to fix that, I'd love to chat!</p>
           <div class="contact__links">
             <a class="btn btn-primary" href="https://drive.google.com/file/d/1GE1lkm4E79JidgYeH9v-VA9o7DAVuQnv/view?usp=sharing" target="_blank" rel="noopener noreferrer">View Resume</a>
             <a class="btn btn-outline" href="https://linkedin.com/in/greglees" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
@@ -1282,6 +1476,13 @@
     </section>
 
   </main>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="lightbox__close" aria-label="Close image">
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <img src="" alt="">
+  </div>
 
   <footer>
     <p>Greg Lees &nbsp;·&nbsp; Built with Claude Code</p>
@@ -1358,6 +1559,40 @@
         io.observe(el);
       });
     }
+
+    // Image lightbox
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = lightbox.querySelector('img');
+    var lightboxClose = lightbox.querySelector('.lightbox__close');
+
+    function openLightbox(img) {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('lightbox--open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('lightbox--open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.zoomable').forEach(function (img) {
+      img.addEventListener('click', function () { openLightbox(img); });
+    });
+
+    lightbox.addEventListener('click', function (e) {
+      if (e.target !== lightboxImg) closeLightbox();
+    });
+    lightboxClose.addEventListener('click', function (e) {
+      e.stopPropagation();
+      closeLightbox();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lightbox.classList.contains('lightbox--open')) closeLightbox();
+    });
   })();
   </script>
 </body>
