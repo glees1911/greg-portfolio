@@ -404,7 +404,6 @@
     .fm-row {
       background: var(--c-surface);
       border: 1px solid var(--c-border);
-      border-left: 4px solid var(--fm-1);
       border-radius: 12px;
       padding: 1.75rem;
       backdrop-filter: blur(8px);
@@ -418,10 +417,10 @@
       box-shadow: 0 10px 30px rgba(40, 44, 53, 0.13);
     }
 
-    .fm-row--1 { width: 70%; border-left-color: var(--fm-1); }
-    .fm-row--2 { width: 80%; border-left-color: var(--fm-1); }
-    .fm-row--3 { width: 90%; border-left-color: var(--fm-1); }
-    .fm-row--4 { width: 100%; border-left-color: var(--fm-1); }
+    .fm-row--1 { width: 70%; }
+    .fm-row--2 { width: 80%; }
+    .fm-row--3 { width: 90%; }
+    .fm-row--4 { width: 100%; }
 
     .fm-row--1 .fm-row__tag,
     .fm-row--2 .fm-row__tag,
@@ -688,6 +687,40 @@
       line-height: 1.7;
     }
 
+    .project-card__toggle {
+      display: none;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: var(--font);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--c-accent);
+      cursor: pointer;
+      transition: color 0.15s;
+      margin-top: 0.75rem;
+    }
+
+    .project-card__toggle:hover { color: var(--c-accent-h); }
+
+    @media (max-width: 639px) {
+      .project-card__toggle { display: block; }
+
+      .project-card__story-wrap {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.35s ease;
+      }
+
+      .project-card--expanded .project-card__story-wrap {
+        grid-template-rows: 1fr;
+      }
+
+      .project-card__story-inner {
+        overflow: hidden;
+      }
+    }
+
     .project-card__outcome-row {
       border-left: 3px solid var(--c-accent);
       padding-left: 1rem;
@@ -737,8 +770,6 @@
       flex: 1;
       min-width: 0;
       overflow: hidden;
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%);
-      mask-image: linear-gradient(to right, transparent 0%, black 16%, black 84%, transparent 100%);
     }
 
     .testimonials__inner {
@@ -777,15 +808,7 @@
       -webkit-backdrop-filter: blur(8px);
       display: flex;
       flex-direction: column;
-      flex: 0 0 65%;
-      opacity: 0.35;
-      transition: opacity 0.35s ease;
-      pointer-events: none;
-    }
-
-    .testimonial--active {
-      opacity: 1;
-      pointer-events: auto;
+      flex: 0 0 100%;
     }
 
     .testimonial__pull {
@@ -1096,14 +1119,9 @@
 
       .testimonials__carousel { flex-wrap: wrap; gap: 0.75rem; }
 
-      .testimonials__track {
-        order: 1;
-        flex: 1 1 100%;
-        -webkit-mask-image: none;
-        mask-image: none;
-      }
+      .testimonials__track { order: 1; flex: 1 1 100%; }
 
-      .testimonial { flex: 0 0 100%; padding: 1.5rem; }
+      .testimonial { padding: 1.5rem; }
 
       .testimonial__arrow--prev { order: 2; }
       .testimonial__arrow--next { order: 3; margin-left: auto; }
@@ -1193,7 +1211,12 @@
             <div class="project-card__body">
               <div class="project-card__main">
                 <div class="project-card__right">
-                  <p class="project-card__story">HubSpot's native landing page builder puts a ceiling on what your brand can look like. Fixed layouts, limited flexibility, and a finished product that rarely matches what marketing actually envisioned. Building the page with AI instead of the native tool removed that ceiling and gave the team something cleaner, more polished, and fully on-brand. I used Claude to design and iterate, then Claude Code to finalize and produce clean HTML, published directly in HubSpot via Design Manager.</p>
+                  <div class="project-card__story-wrap">
+                    <div class="project-card__story-inner">
+                      <p class="project-card__story">HubSpot's native landing page builder puts a ceiling on what your brand can look like. Fixed layouts, limited flexibility, and a finished product that rarely matches what marketing actually envisioned. Building the page with AI instead of the native tool removed that ceiling and gave the team something cleaner, more polished, and fully on-brand. I used Claude to design and iterate, then Claude Code to finalize and produce clean HTML, published directly in HubSpot via Design Manager.</p>
+                    </div>
+                  </div>
+                  <button class="project-card__toggle" aria-expanded="false">Read more</button>
                 </div>
                 <div class="project-card__image">
                   <img class="zoomable" src="project-hubspot.jpg" alt="AI-Assisted HubSpot Landing Page">
@@ -1212,7 +1235,12 @@
             <div class="project-card__body">
               <div class="project-card__main">
                 <div class="project-card__right">
-                  <p class="project-card__story">LJB formed a new GTM team that grew to 14 people and no operational foundation. Leads came in and disappeared. There was no shared definition of a qualified lead, no routing, no reporting, and no way to know what happened after a handoff. I built the whole system that included lifecycle stages, MQL criteria, contact management, segmentation, automated workflows, and real-time reporting in HubSpot.</p>
+                  <div class="project-card__story-wrap">
+                    <div class="project-card__story-inner">
+                      <p class="project-card__story">LJB formed a new GTM team that grew to 14 people and no operational foundation. Leads came in and disappeared. There was no shared definition of a qualified lead, no routing, no reporting, and no way to know what happened after a handoff. I built the whole system that included lifecycle stages, MQL criteria, contact management, segmentation, automated workflows, and real-time reporting in HubSpot.</p>
+                    </div>
+                  </div>
+                  <button class="project-card__toggle" aria-expanded="false">Read more</button>
                 </div>
                 <div class="project-card__image">
                   <img class="zoomable" src="project-gtm.jpg" alt="GTM Operations Infrastructure">
@@ -1231,7 +1259,12 @@
             <div class="project-card__body">
               <div class="project-card__main">
                 <div class="project-card__right">
-                  <p class="project-card__story">The Dayton Dragons were managing $3.3M in annual partnership revenue the way a lot of teams manage things when they're moving fast, across inboxes, individual memory, and spreadsheets nobody else could follow. With 60+ accounts and cross-functional execution involved, there was no single place where any of it lived. Activation workflows didn't exist and delivery was held together by different individuals. I built the infrastructure from scratch to develop centralized systems, delivery workflows, partner communications, and the engine to run it all.</p>
+                  <div class="project-card__story-wrap">
+                    <div class="project-card__story-inner">
+                      <p class="project-card__story">The Dayton Dragons were managing $3.3M in annual partnership revenue the way a lot of teams manage things when they're moving fast, across inboxes, individual memory, and spreadsheets nobody else could follow. With 60+ accounts and cross-functional execution involved, there was no single place where any of it lived. Activation workflows didn't exist and delivery was held together by different individuals. I built the infrastructure from scratch to develop centralized systems, delivery workflows, partner communications, and the engine to run it all.</p>
+                    </div>
+                  </div>
+                  <button class="project-card__toggle" aria-expanded="false">Read more</button>
                 </div>
                 <div class="project-card__image">
                   <img class="zoomable" src="project-sponsorship.svg" alt="Partnership tracking spreadsheet">
@@ -1544,6 +1577,16 @@
         var expanded = card.classList.toggle('testimonial--expanded');
         btn.setAttribute('aria-expanded', expanded);
         btn.textContent = expanded ? 'Read less' : 'Read more';
+      });
+    });
+
+    // Project card expand/collapse (mobile only)
+    document.querySelectorAll('.project-card__toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var card = btn.closest('.project-card');
+        var expanded = card.classList.toggle('project-card--expanded');
+        btn.setAttribute('aria-expanded', expanded);
+        btn.textContent = expanded ? 'Show less' : 'Read more';
       });
     });
 
